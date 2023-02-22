@@ -39,9 +39,9 @@ CONFIG:
 
   DATA:
     DATASET_NAME: 'ava'
-    LABEL_PATH: '/xxx/datasets/ava_action_list_v2.1_for_activitynet_2018.pbtxt'
-    ANNO_PATH: '/xxx/datasets/ava_{}_v21.json'
-    DATA_PATH: '/xxx/ava/frames/{}/'
+    LABEL_PATH: '/mnt/share/sda1/dataset/STAD/ava_action_list_v2.1_for_activitynet_2018.pbtxt'
+    ANNO_PATH: '/mnt/share/sda1/dataset/ava_{}_v21.json'
+    DATA_PATH: '/mnt/share/sda1/dataset/ava/frames/{}/'
     NUM_CLASSES: 80
     MULTIGRID: False
     IMG_SIZE: 256
