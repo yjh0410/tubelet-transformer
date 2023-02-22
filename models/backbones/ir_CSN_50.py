@@ -8,7 +8,6 @@ Modified by Zhang Yanyi
 import torch
 import torch.nn as nn
 
-
 eps = 1e-3
 bn_mmt = 0.1
 
@@ -335,3 +334,43 @@ def build_CSN(cfg):
     print("tune point: {}".format(tune_point))
     return model
 
+# For debug
+def build_CSN_():
+    tune_point = 4
+    model = build_model(n_classes=80,
+                        sample_size=256,
+                        sample_duration=32,
+                        pretrain_path="",
+                        load_fc=False,
+                        load_pretrain=False,
+                        use_affine=False,
+                        tune_point=tune_point,
+                        last_stride=False)
+    print("tune point: {}".format(tune_point))
+    return model
+
+
+if __name__ == '__main__':
+    import time
+    from thop import profile
+    
+    model = build_CSN_()
+    if torch.cuda.is_available():
+        device = torch.device("cuda")
+    else:
+        device = torch.device("cpu")
+    model = model.to(device)
+
+    x = torch.randn(1, 3, 32, 32, 32).to(device)
+    # star time
+    t0 = time.time()
+    out, _ = model(x)
+    print('time', time.time() - t0)
+    print(out.shape)
+
+    x = torch.randn(1, 3, 32, 256, 256)
+    print('==============================')
+    flops, params = profile(model, inputs=(x, ), verbose=False)
+    print('==============================')
+    print('GFLOPs : {:.2f}'.format(flops / 1e9 * 2))
+    print('Params : {:.2f} M'.format(params / 1e6))
