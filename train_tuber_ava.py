@@ -4,7 +4,6 @@ import time
 
 import torch
 import torch.optim
-from tensorboardX import SummaryWriter
 
 from models.tuber_ava import build_model
 from utils.model_utils import deploy_model, load_model, save_checkpoint
@@ -20,7 +19,7 @@ def main_worker(cfg):
     # create tensorboard and logs
     if cfg.DDP_CONFIG.GPU_WORLD_RANK == 0:
         tb_logdir = build_log_dir(cfg)
-        writer = SummaryWriter(log_dir=tb_logdir)
+        writer = None
     else:
         writer = None
     # cfg.freeze()
